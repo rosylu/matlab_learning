@@ -15,8 +15,12 @@ for size_index = 1:length(size_vec)
     
 end
 
+% Expected value O(n^3)
+expected = (size_vec.^3);
+
 % Generate plot
-loglog(size_vec,require_time,'-s'); 
+loglog(size_vec,expected,size_vec,require_time,'-s'); 
+legend('Expected trend O(n^3)','Actual trend');
 grid
 
 % Add plot info
