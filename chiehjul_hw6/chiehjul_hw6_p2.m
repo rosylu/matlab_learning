@@ -1,25 +1,6 @@
 % This problem will study the loss of orthogonality that can 
 % occur using the Gram- Schmidt procedure for ill-conditioned matrices.
 
-sizes = 2:11;
-time = [];
-
-for n = sizes
-    
-    A = hilb(n);
-    
-    [Q, R]=qr(A,0);
-    [Q2, R1] = {}_hw5_p3(A);
-    [Q2, R2] = {}_hw5_p4(A);
-    
-    a(n-1) = (norm(Q'*Q - eye(n)));
-    b(n-1) = (norm(Q_classic'*Q_classic - eye(n)));
-    c(n-1) = (norm(..));
-    
-end
-
-loglog(sizes, a,sizes,b,sizes,c);
-
 clear all
 
 for n = 2:11
@@ -30,19 +11,24 @@ for n = 2:11
     [Q, R]=qr(A,0);
     [Q_classic, R_classic] = chiehjul_hw5_p3(A);
     [Q_modified, R_modified] = chiehjul_hw5_p4(A);
-     
+    [Q_householder, R_householder] = chiehjul_hw6_p1(A);
+    
     I = eye(n);
     
     % Compute the error and store the val
     ortho_err_matlab(n-1) = (norm(Q'*Q - I));
     ortho_err_classic(n-1) = (norm(Q_classic'*Q_classic - I));
     ortho_err_modified(n-1) = (norm(Q_modified'*Q_modified - I));
+    ortho_err_householder(n-1) = (norm(Q_householder'*Q_householder - I));
      
 end
 
 % Plot the graph
-semilogy(ortho_err_size, ortho_err_matlab, '-s', ortho_err_size, ortho_err_classic, '-s', ortho_err_size, ortho_err_modified, '-s');
-legend('Matlab qr','Classic G-S method','Modified G-S method');
+semilogy(ortho_err_size, ortho_err_matlab, '-s', ...
+    ortho_err_size, ortho_err_classic, '-s', ...
+    ortho_err_size, ortho_err_modified, '-s', ...
+    ortho_err_size, ortho_err_householder, '-s');
+legend('Matlab qr','Classic G-S method','Modified G-S method','Household G-S method');
 grid;
 
 title('Loss of orthogonality for ill-conditioned matrices');
