@@ -14,18 +14,20 @@ for i = n_size
     error(i) = abs(ans-val);
     
     h = 1/i;
+    
+    h_size(i) = h;
     expect(i) = h^4;
 end
 
-expect = expect*0.037;
+expect = expect*(10^-2.8);
 
 % Generate plot
-loglog(n_size, error, '-s', ...
-    n_size, expect, '-s');
+loglog(h_size, error, '-s', ...
+    h_size, expect, '-s');
 legend("Error","Global expected val");
 grid;
 
 % Add plot info
 title('Simpson’s rule error');
-xlabel('n size');
+xlabel('h');
 ylabel('Error');
